@@ -28,10 +28,10 @@ async def pizza_time(message : types.Message):
 
 
 #кулбэки ловим инлайн кнопки
-# @dp.callback_query_handler(lambda x: x.data and x.data.startswith('eq_menu'))
-# async def eq_menu(call:types.CallbackQuery):
-# 	await sqlite_db.sql_read(call)
-# 	# await call.answer(call)
+@dp.callback_query_handler(lambda x: x.data and x.data.startswith('eq_menu'))
+async def eq_menu(call:types.CallbackQuery):
+	await sqlite_db.sql_read(call)
+	# await call.answer(call)
 
 # @dp.callback_query_handler(lambda x: x.data and x.data.startswith('now_at_moment'))
 # async def now(call:types.CallbackQuery):
