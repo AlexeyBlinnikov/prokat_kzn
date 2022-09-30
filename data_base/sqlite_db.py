@@ -45,7 +45,7 @@ async def sql_read2():
 # Чтение таблица о наличии
 async def select_db1(message):
     for r in cur2.execute('SELECT * FROM now').fetchall():
-        await bot.send_photo(message.from_user.id, r[0], f'{r[1],r[2], r[3],r[4], r[5],r[6], r[7]}')#, f'Палатка 1 слой:{r[0]}\n2 слоя: {r[1]}\n {r[2]} {r[3]} {r[4]}{r[5]} {r[6]}Стол: {r[7]}')
+        await bot.send_message(message.from_user.id, f'Палатка 2 местная 1 слой: {r[0]} шт\nПалатка 2 местная 2 слоя: {r[1]} шт\nПалатка 3-ех местная Fresh&Black: {r[2]} шт\nПалатка 4-ех местная: {r[3]} шт\nСпальные мешки: {r[4]} шт\nКоврики: {r[5]} шт\nСтулья: {r[6]} шт\nСтолы: {r[7]} шт')
 
 
 async def del_sql(data):

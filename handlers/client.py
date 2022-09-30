@@ -19,7 +19,8 @@ async def command_start(message : types.Message):
 # @dp.message_handler(commands = ['Расположение'])
 async def pizza_place(message : types.Message):
 	
-	await bot.send_message(message.from_user.id, "Сибирский тракт д. 5\n Вывеска 'Спорт и рыбалка'")
+	await bot.send_message(message.from_user.id, "Сибирский тракт д. 5\nВывеска 'Спорт и рыбалка'")
+	await bot.send_location(message.from_user.id, 55.804552, 49.184280)
 
 # @dp.message_handler(commands = ['Режим работы'])
 async def pizza_time(message : types.Message):
@@ -31,13 +32,20 @@ async def pizza_time(message : types.Message):
 @dp.callback_query_handler(lambda x: x.data and x.data.startswith('eq_menu'))
 async def eq_menu(call:types.CallbackQuery):
 	await sqlite_db.sql_read(call)
-	# await call.answer(call)
+	# await call.answer(call.message, 'hi')
 
-# @dp.callback_query_handler(lambda x: x.data and x.data.startswith('now_at_moment'))
-# async def now(call:types.CallbackQuery):
-# 	await sqlite_db.select_db1(call)
+@dp.callback_query_handler(lambda x: x.data and x.data.startswith('now_at_moment'))
+async def now(call:types.CallbackQuery):
+	await sqlite_db.select_db1(call)
 	
+@dp.callback_query_handler(lambda x: x.data and x.data.startswith('complect'))
+async def now(call:types.CallbackQuery):
+	await bot.send_message(call.from_user.id, 'Сап борд \nСумка для переноски\nНасос ручной с монометром \nВесло\nЛиш для ноги\nСиденье и подставка для ног\nЧехол водонепроницаемый для телефона \nЖилет спасательный')
 
+@dp.callback_query_handler(lambda x: x.data and x.data.startswith('size'))
+async def now(call:types.CallbackQuery):
+	await call.message.answer("Сапы Hydro Force Oceana 10'\nРазмеры: 305х84х15 см")
+	# await bot.send_photo(call.from_user.id, 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fmegadecha.pl%2Fua%2Fdeska-sup-board-hydro-force-oceana-xl-combo-10-siedzisko-wioslo-2w1-smycz-p2806&psig=AOvVaw3zQPLbOYvX0YmHoJn4inHX&ust=1664614319638000&source=images&cd=vfe&ved=0CAkQjRxqFwoTCLjS4N-RvPoCFQAAAAAdAAAAABAD')
 
 
 
@@ -54,18 +62,17 @@ async def sup_board(message : types.Message):
 	await bot.send_message(message.from_user.id, text ='Мы сдаем сапы на день/сутки/выходные\nЧто именно вас инетересует?', reply_markup =InlineKeyboardMarkup()
 							.add(InlineKeyboardButton(f'Наличие на выходные', callback_data = f'have '))
 							.add(InlineKeyboardButton(f'Какие сапы мы сдаем', callback_data = f'size '))
-							.add(InlineKeyboardButton(f'Что в комплекте', callback_data = f'complect '))
-							.add(InlineKeyboardButton(f'Жилеты, чехлы для телефона', callback_data = f'save '))
-							.add(InlineKeyboardButton(f'Инструкция по использованию', callback_data = f'instruction ')))
+							.add(InlineKeyboardButton(f'Что в комплекте', callback_data = f'complect'))
+							.add(InlineKeyboardButton(f'Инструкция по использованию', url ='https://www.youtube.com/watch?v=PFuS8QYS2zw')))
 
 
 async def equipment_command(message: types.Message):
 	await bot.send_message(message.from_user.id, text ='Туристическое оборудование', reply_markup =InlineKeyboardMarkup()
 							.add(InlineKeyboardButton(f'Оборудование', callback_data = f'eq_menu'))
 							.add(InlineKeyboardButton(f'В наличии сейчас', callback_data = f'now_at_moment'))
-							.add(InlineKeyboardButton(f'Инструкция по сборке', callback_data = f'complect '))
-							.add(InlineKeyboardButton(f'Отличие палаток и их размеры', callback_data = f'save '))
-							.add(InlineKeyboardButton(f'Инструкция по использованию', callback_data = f'eq ')))
+							.add(InlineKeyboardButton(f'Инструкция по сборке', callback_data = f'instruction')))
+							# .add(InlineKeyboardButton(f'Отличие палаток и их размеры', callback_data = f'save ')))
+
 
 
 

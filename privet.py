@@ -3,7 +3,6 @@ from create_bot import dp
 from data_base import sqlite_db
 
 
-
 async def on_startup(_):
 	print('Бот вышел в онлайн!')
 	sqlite_db.sql_start()
