@@ -1,7 +1,7 @@
 from create_bot import bot
 # import sqlite3 as sq
 import psycopg2 as ps
-from tkinter import INSERT
+
 
 DB_URI = 'postgres://mhmcqjtxsplozn:0cc84beffbbe8cd1dffab75e10ebf1afd21c0b20a495fdbbf02434ef1d0f31ec@ec2-3-92-98-129.compute-1.amazonaws.com:5432/d821t7d8rkt0uu'
 
@@ -43,7 +43,3 @@ async def sql_read2():
 #         await bot.send_photo(message.from_user.id, f'Палатка 1 слой:{r[0]}\n2 слоя: {r[1]}\n Стол: {r[-1]}')
     
 
-
-# async def delete(r):
-#     cursor.execute('DELETE FROM eq_now WHERE price = ?', r)
-#     cursor.commit()
