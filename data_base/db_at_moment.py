@@ -42,7 +42,7 @@ async def sql_read2():
     return result
     
 async def del_sql(data):
-    cursor.execute('DELETE FROM prokat WHERE name ==?', (data,))
+    cursor.execute('DELETE FROM prokat WHERE name ==%s', (data,))
     base_ps.commit()
 
 # async def select_db1(message):
