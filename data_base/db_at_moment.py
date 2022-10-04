@@ -37,9 +37,13 @@ async def sql_read(message):
 
 
 async def sql_read2():
-    return cursor.execute('SELECT * FROM prokat').fetchall()
+    cursor.execute('SELECT * FROM prokat')
+    result = cursor.fetchall()
+    return result
     
-
+async def del_sql(data):
+    cursor.execute('DELETE FROM prokat WHERE name ==?', (data,))
+    base_ps.commit()
 
 # async def select_db1(message):
 #     for r in cursor.execute('SELECT * FROM eq_now ').fetchall():

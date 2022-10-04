@@ -177,7 +177,7 @@ async def load_table(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(lambda x: x.data and x.data.startswith('del '))
 async def kb_delete(call:types.CallbackQuery):
-    await sqlite_db.del_sql(call.data.replace('del ', ''))
+    await db_at_moment.del_sql(call.data.replace('del ', ''))
     await call.answer(text = f'{call.data.replace("del ", "")} удалена.', show_alert= True)
 
 
@@ -186,7 +186,7 @@ async def kb_delete(call:types.CallbackQuery):
 @dp.message_handler(commands ='удалить')
 async def delete_kb(message: types.Message):
     if message.from_user.id == ID:
-        read = await sqlite_db.sql_read2()
+        read = await db_at_moment.sql_read2()
         for ret in read:
             await bot.send_photo(message.from_user.id, ret[0], f'{ret[1]}\n Описание: {ret[2]}\n Цена: {ret[-1]}')
             await bot.send_message(message.from_user.id, text ='^^^', reply_markup =InlineKeyboardMarkup().add(InlineKeyboardButton(f'Удалить {ret[1]}', callback_data = f'del {ret[1]}')))
