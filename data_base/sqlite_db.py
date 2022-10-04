@@ -1,7 +1,9 @@
 # from os import curdir
 from email.mime import message
-import sqlite3 as sq
+# import sqlite3 as sq
+import psycopg2 as sq
 from create_bot import bot
+
 
 def sql_start():
     global base, cur

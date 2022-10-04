@@ -3,7 +3,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import types, Dispatcher
 from create_bot import dp, bot
 from aiogram.dispatcher.filters import Text
-from data_base import sqlite_db
+# from data_base import sqlite_db
+from data_base import db_at_moment
 from keyboards import admin_kb
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -88,7 +89,7 @@ async def load_price(message: types.Message, state: FSMContext):
             data['price'] = float(message.text)
     # вывод
 
-        await sqlite_db.sql_add_command(state)
+        await db_at_moment.sql_add_command(state)
         await state.finish()
 
 
