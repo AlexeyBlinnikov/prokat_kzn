@@ -3,7 +3,7 @@ from create_bot import bot
 import psycopg2 as ps
 from tkinter import INSERT
 
-DB_URI = 'postgres://gncxbxpflzktlj:a7631da535f92ffc6742164286b4910b32f4ff1d4d0674c5743abaa310329dd4@ec2-52-207-90-231.compute-1.amazonaws.com:5432/d6prkuu38tt6rq'
+DB_URI = 'postgres://mhmcqjtxsplozn:0cc84beffbbe8cd1dffab75e10ebf1afd21c0b20a495fdbbf02434ef1d0f31ec@ec2-3-92-98-129.compute-1.amazonaws.com:5432/d821t7d8rkt0uu'
 
 def start_db():
     global cursor, base_ps
@@ -12,12 +12,12 @@ def start_db():
     if base_ps:
         print("Data2 connect")
 
-    cursor.execute('CREATE TABLE IF NOT EXISTS prokat(img TEXT, name TEXT PRIMARY KEY, description TEXT, price TEXT)')
-    base_ps.commit()
+    # cursor.execute('CREATE TABLE IF NOT EXISTS prokat(img TEXT, name TEXT PRIMARY KEY, description TEXT, price TEXT)')
+    # base_ps.commit()
 
 async def sql_add_command(state):
     async with state.proxy() as data:
-        cursor.execute('INSERT INTO prokat VALUES (?, ?, ?, ?)', tuple(data.values()))
+        cursor.execute('INSERT INTO prokat VALUES (%s, %s, %s, %s)', tuple(data.values()))
         base_ps.commit()
 
 # async def add_to_db():
