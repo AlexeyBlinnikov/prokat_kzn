@@ -4,6 +4,7 @@ import psycopg2 as ps
 
 
 DB_URI = 'postgres://mhmcqjtxsplozn:0cc84beffbbe8cd1dffab75e10ebf1afd21c0b20a495fdbbf02434ef1d0f31ec@ec2-3-92-98-129.compute-1.amazonaws.com:5432/d821t7d8rkt0uu'
+result = []
 
 def start_db():
     global cursor, base_ps
@@ -29,7 +30,9 @@ async def sql_add_command(state):
 #     cursor.execute('SELECT * FROM eq_now ').fetchall()
 
 async def sql_read(message):
-    for ret in cursor.execute('SELECT * FROM prokat').fetchall():
+    cursor.execute('SELECT * FROM prokat')
+    result = cursor.fetchall()
+    for ret in result:
         await bot.send_photo(message.from_user.id, ret[0], f'{ret[1]}\nОписание: {ret[2]}\n Цена: {ret[-1]}')
 
 
