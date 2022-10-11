@@ -6,7 +6,7 @@ import json, string
 
 # @dp.message_handler()
 async def echo_send(message : types.Message):
-	if {i.lower().translate(str.maketrans('','', string.punctuation)) for i in message.text.split(' ')}.intersection(set(json.load(open('/Users/aleksey/Desktop/прогр/бот/filtr/cenz.json')))) != set():
+	if {i.lower().translate(str.maketrans('','', string.punctuation)) for i in message.text.split(' ')}.intersection(set(json.load(open('/Users/aleksey/Desktop/прогр/бот_прокат/filtr/cenz.json')))) != set():
 		await message.reply("Маты запрещены!")
 		await message.delete()
 

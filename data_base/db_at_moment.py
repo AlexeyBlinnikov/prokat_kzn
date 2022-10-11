@@ -11,23 +11,25 @@ def start_db():
     base_ps = ps.connect(DB_URI, sslmode = 'require')
     cursor = base_ps.cursor()
     if base_ps:
+        print("Data1 connect")
+
+# DB о наличии сапов
+def start_sup():
+    global base, cur
+    base = ps.connect(DB_URI, sslmode = 'require')
+    cur = base.cursor()
+    if base:
         print("Data2 connect")
 
     # cursor.execute('CREATE TABLE IF NOT EXISTS prokat(img TEXT, name TEXT PRIMARY KEY, description TEXT, price TEXT)')
     # base_ps.commit()
 
+
+# ДБ оборудование
 async def sql_add_command(state):
     async with state.proxy() as data:
         cursor.execute('INSERT INTO prokat VALUES (%s, %s, %s, %s)', tuple(data.values()))
         base_ps.commit()
-
-# async def add_to_db():
-#     async with open ('equipment.db') as f:
-#         cursor.execute('INSERT INTO prokat VALUES(?, ?, ?, ?)', f)
-#         cursor.commit()
-
-# async def select_db():
-#     cursor.execute('SELECT * FROM eq_now ').fetchall()
 
 async def sql_read(message):
     cursor.execute('SELECT * FROM prokat')
@@ -35,14 +37,14 @@ async def sql_read(message):
     for ret in result:
         await bot.send_photo(message.from_user.id, ret[0], f'{ret[1]}\nОписание: {ret[2]}\n Цена: {ret[-1]}')
 
-
 async def sql_read2():
     cursor.execute('SELECT * FROM prokat')
     result = cursor.fetchall()
     return result
     
 async def del_sql(data):
-    cursor.execute('DELETE FROM prokat WHERE name ==%s', (data,))
+    print(data)
+    cursor.execute('DELETE FROM prokat WHERE name = %s', (data,))
     base_ps.commit()
 
 # async def select_db1(message):
@@ -50,3 +52,18 @@ async def del_sql(data):
 #         await bot.send_photo(message.from_user.id, f'Палатка 1 слой:{r[0]}\n2 слоя: {r[1]}\n Стол: {r[-1]}')
     
 
+# Дб наличие сапов
+async def sql_add2_command(state):
+    async with state.proxy() as data:
+        cur.execute('INSERT INTO now VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', tuple(data.values()))
+        base.commit()
+
+async def select_db1(message):
+    cur.execute('SELECT * FROM now')
+    result = cur.fetchall()
+    for r in result:
+        await bot.send_message(message.from_user.id, f'Палатка 2 местная 1 слой: {r[0]} шт\nПалатка 2 местная 2 слоя: {r[1]} шт\nПалатка 3-ех местная Fresh&Black: {r[2]} шт\nПалатка 4-ех местная: {r[3]} шт\nСпальные мешки: {r[4]} шт\nКоврики: {r[5]} шт\nСтулья: {r[6]} шт\nСтолы: {r[7]} шт')
+
+async def del_sql_now():
+    cur.execute('DELETE FROM now')
+    base.commit()

@@ -158,7 +158,7 @@ async def load_chair(message: types.Message, state: FSMContext):
         await message.reply('Столы')
 
 
-    # Ловим четвертый ответ
+
 # @dp.message_handler(state = FSMAdmin.price)
 async def load_table(message: types.Message, state: FSMContext):
     if message.from_user.id == ID:
@@ -166,7 +166,7 @@ async def load_table(message: types.Message, state: FSMContext):
             data['table'] = message.text
     # вывод
 
-        await sqlite_db.sql_add2_command(state)
+        await db_at_moment.sql_add2_command(state)
         await state.finish()
 
 ################################################
@@ -190,6 +190,13 @@ async def delete_kb(message: types.Message):
         for ret in read:
             await bot.send_photo(message.from_user.id, ret[0], f'{ret[1]}\n Описание: {ret[2]}\n Цена: {ret[-1]}')
             await bot.send_message(message.from_user.id, text ='^^^', reply_markup =InlineKeyboardMarkup().add(InlineKeyboardButton(f'Удалить {ret[1]}', callback_data = f'del {ret[1]}')))
+
+@dp.message_handler(commands ='удалить_онлайн')
+async def delete_kb(message: types.Message):
+    if message.from_user.id == ID:
+        read = await db_at_moment.sql_read2()
+        await db_at_moment.del_sql_now()
+        await bot.send_message(message.from_user.id, 'Все данные о наличии палаток удалены')
     
 def register_handlers_admin(dp : Dispatcher):
     dp.register_message_handler(cm_start, commands =['Загрузить'], state = None)

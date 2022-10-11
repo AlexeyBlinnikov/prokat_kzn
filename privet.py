@@ -6,6 +6,7 @@ from data_base import db_at_moment
 async def on_startup(_):
 	print('Бот вышел в онлайн!')
 	db_at_moment.start_db()
+	db_at_moment.start_sup()
 	# sqlite_db.sql_start_now()
 
 
