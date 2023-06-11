@@ -3,8 +3,8 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram import types, Dispatcher
 from create_bot import dp, bot
 from aiogram.dispatcher.filters import Text
-# from data_base import sqlite_db
-from data_base import db_at_moment
+from data_base import sqlite_db
+# from data_base import db_at_moment
 from keyboards import admin_kb
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -67,6 +67,7 @@ async def load_name(message: types.Message, state: FSMContext):
     if message.from_user.id == ID:
         async with state.proxy() as data:
             data['name'] = message.text
+        # print(data)
         await FSMAdmin.next()
         await message.reply('Введи описание')
 
@@ -87,9 +88,10 @@ async def load_price(message: types.Message, state: FSMContext):
     if message.from_user.id == ID:
         async with state.proxy() as data:
             data['price'] = float(message.text)
+        # print(data)
     # вывод
 
-        await db_at_moment.sql_add_command(state)
+        await sqlite_db.sql_add_command(state)
         await state.finish()
 
 
@@ -166,7 +168,7 @@ async def load_table(message: types.Message, state: FSMContext):
             data['table'] = message.text
     # вывод
 
-        await db_at_moment.sql_add2_command(state)
+        await sqlite_db.sql_add2_command(state)
         await state.finish()
 
 ################################################
@@ -177,16 +179,13 @@ async def load_table(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(lambda x: x.data and x.data.startswith('del '))
 async def kb_delete(call:types.CallbackQuery):
-    await db_at_moment.del_sql(call.data.replace('del ', ''))
+    await sqlite_db.del_sql(call.data.replace('del ', ''))
     await call.answer(text = f'{call.data.replace("del ", "")} удалена.', show_alert= True)
-
-
-
 
 @dp.message_handler(commands ='удалить')
 async def delete_kb(message: types.Message):
     if message.from_user.id == ID:
-        read = await db_at_moment.sql_read2()
+        read = await sqlite_db.sql_read2()
         for ret in read:
             await bot.send_photo(message.from_user.id, ret[0], f'{ret[1]}\n Описание: {ret[2]}\n Цена: {ret[-1]}')
             await bot.send_message(message.from_user.id, text ='^^^', reply_markup =InlineKeyboardMarkup().add(InlineKeyboardButton(f'Удалить {ret[1]}', callback_data = f'del {ret[1]}')))
@@ -194,8 +193,8 @@ async def delete_kb(message: types.Message):
 @dp.message_handler(commands ='удалить_онлайн')
 async def delete_kb(message: types.Message):
     if message.from_user.id == ID:
-        read = await db_at_moment.sql_read2()
-        await db_at_moment.del_sql_now()
+        # read = await sqlite_db.sql_read2()
+        await sqlite_db.del_sql_now()
         await bot.send_message(message.from_user.id, 'Все данные о наличии палаток удалены')
     
 def register_handlers_admin(dp : Dispatcher):
