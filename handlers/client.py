@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 from create_bot import dp, bot
 from keyboards.client_kb import kb_client, kb_client2, kb_client3
 # from data_base import sqlite_db, db_at_moment
-from data_base.sqlite_db import sql_read, select_db1
+from data_base.sqlite_db import sql_read
 from aiogram.dispatcher.filters import Text
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
