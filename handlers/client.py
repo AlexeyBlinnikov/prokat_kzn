@@ -106,19 +106,6 @@ async def sauna_price(call:types.CallbackQuery):
 
 
 
-# @dp.callback_query_handler(lambda x: x.data and x.data.startswith('have'))
-# async def now(call:types.CallbackQuery):
-# 	await bot.send_message(call.from_user.id, 'Свободные сапы на субботу: 15 шт\nCвободные сапы на воскресенье: 15 шт\n')
-
-# @dp.callback_query_handler(lambda x: x.data and x.data.startswith('document'))
-# async def now(call:types.CallbackQuery):
-# 	await bot.send_message(call.from_user.id, 'В залог необходимо оставить любой документ, удостоверяющий личность.\n(Права, паспорт, Снилс и т.д.)\nТакже возможен денежный залог, он рассчитывается индивидуально и эквивалентен сумме взятого в прокат оборудования')
-
-# @dp.callback_query_handler(lambda x: x.data and x.data.startswith('document_sup'))
-# async def now(call:types.CallbackQuery):
-# 	await bot.send_message(call.from_user.id, 'В залог необходимо оставить любой документ, удостоверяющий личность.\n(Права, паспорт, Снилс и т.д.)\nТакже возможен денежный залог в размере 20000 рублей за один Сап Борд')
-
-# @dp.callback_query_handler(lambda x: x.data and x.data.startswith('instruction_tent'))
 
 
 #Обычные кнопки Оборудование
